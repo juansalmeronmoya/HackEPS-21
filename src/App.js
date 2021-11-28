@@ -9,7 +9,7 @@ const colorcitos = ['white', 'red', 'blue', '#fabada', 'violet', 'olive', 'black
 const Ball = (props) => {
   return <div
     className={'triangle'}
-    style={{border: '1.5px solid black', borderRadius: '50%', top: props.top, left:props.left, width: 8, height: 8, position:"absolute", backgroundColor: props.color}}
+    style={{zIndex:999, border: '1.5px solid black', borderRadius: '50%', top: props.top, left:props.left, width: 8, height: 8, position:"absolute", backgroundColor: props.color}}
   >
    <span style={{fontSize: 10}}> {props.name} </span>
   </div>
@@ -40,13 +40,14 @@ const Cursor = (props) => {
               </div>
             </>
             :
-            <div style={{marginLeft: 20, marginTop: 20, textAlign: 'left', fontWeight: 600}}>{m[0]}</div>)}}
+            <div style={{marginLeft: 20, marginTop: 20, textAlign: 'left', fontWeight: 600}}>{m[0]}</div>)}
       </div>
-
+      {props.children}
     </div>)
 }
 
 const Images = (props) => {
+  console.log('render images')
   const [mapValue, setMapValue] = useState(Array.from(props.sharedMap.entries()))
   const [text, setText] = useState('')
 
@@ -66,8 +67,9 @@ const Images = (props) => {
   return(
     <div>
     <div style={{
-      position: 'sticky',
-      top: 0,
+      position: 'absolute',
+      top: 50,
+      left: 700,
       padding: '20px',
       textAlign: 'center',
       fontSize: '20px'}}>
@@ -82,9 +84,10 @@ const Images = (props) => {
           value="Submit"/>
       </form>
     </div>
+      <div id={'section-to-print'}>
       {mapValue.map((m, key) => {
-        console.log('important', m)
         return (
+          <div style={{width:200, height:200}}>
           <Draggable
             key={key}
             position={{x: m[1]?.x, y: m[1]?.y}}
@@ -97,8 +100,10 @@ const Images = (props) => {
                 src={m[1]?.url}/>
             </div>
           </Draggable>
+          </div>
         )
       })}
+      </div>
     </div>
   )
 }
@@ -123,10 +128,14 @@ const App = () => {
   }, []);
 
 
+
   return (
     <>
-      <Images id={id} sharedMap={sharedDragMap} sharedSec={sharedCursorMap}/>
-      <Cursor id={id} sharedMap={sharedCursorMap}/>
+
+      {/*<div id={'section-to-print'} style={{width:500, height:500, border: '1px solid black', borderRadius:'5px', position:'absolute', top:250, left:250, }}/>*/}
+      <Cursor id={id} sharedMap={sharedCursorMap}>
+        <Images id={id} sharedMap={sharedDragMap} sharedSec={sharedCursorMap}/>
+      </Cursor>
     </>
   )
 }

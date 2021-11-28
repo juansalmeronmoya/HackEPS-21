@@ -13,7 +13,26 @@ code {
 }
 
 .page {
-  z-index: 99999;
+  z-index: -1;
   height: 100vh;
   width: 100vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #section-to-print, #section-to-print * {
+    visibility: visible;
+  }
+  #section-to-print {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    left: 0;
+    top: 0;
+  }
 }
