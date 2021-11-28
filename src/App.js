@@ -47,21 +47,19 @@ const Cursor = (props) => {
 }
 
 const Images = (props) => {
-  console.log('render images')
   const [mapValue, setMapValue] = useState(Array.from(props.sharedMap.entries()))
   const [text, setText] = useState('')
 
   useEffect(() => {
     props.sharedMap.observeDeep(() => {
-      console.log(Array.from(props.sharedMap.entries()))
       setMapValue(Array.from(props.sharedMap.entries()))
     })
     return () => {}
   }, []);
 
   const handlerOnDrag = (e, url) => {
-    props.sharedMap.set(url, {x:e.clientX-100, y:e.clientY-100, url: url})
-    props.sharedSec.set(props.id, {x:e.clientX, y:e.clientY})
+    props.sharedMap.set(url, {x:props.sharedSec.get(props.id).x -100, y:props.sharedSec.get(props.id).y-100, url: url})
+    //props.sharedSec.set(props.id, {x:e.clientX, y:e.clientY})
   };
 
   return(
@@ -87,7 +85,7 @@ const Images = (props) => {
       <div id={'section-to-print'}>
       {mapValue.map((m, key) => {
         return (
-          <div style={{width:200, height:200}}>
+          <div style={{width:200, height:200, position:'absolute'}}>
           <Draggable
             key={key}
             position={{x: m[1]?.x, y: m[1]?.y}}
@@ -132,7 +130,6 @@ const App = () => {
   return (
     <>
 
-      {/*<div id={'section-to-print'} style={{width:500, height:500, border: '1px solid black', borderRadius:'5px', position:'absolute', top:250, left:250, }}/>*/}
       <Cursor id={id} sharedMap={sharedCursorMap}>
         <Images id={id} sharedMap={sharedDragMap} sharedSec={sharedCursorMap}/>
       </Cursor>
