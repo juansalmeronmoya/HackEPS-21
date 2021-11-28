@@ -4,11 +4,15 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Routes ,Route} from 'react-router-dom';
 import App from "./App";
+import Login from "./Login";
 
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Login />}/>
+        </Routes>
         <Routes>
             <Route path="/:room/:id" element={<App />}/>
         </Routes>

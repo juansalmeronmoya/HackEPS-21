@@ -43,6 +43,7 @@ const Cursor = (props) => {
             <div style={{marginLeft: 20, marginTop: 20, textAlign: 'left', fontWeight: 600}}>{m[0]}</div>)}
       </div>
       {props.children}
+
     </div>)
 }
 
@@ -133,6 +134,13 @@ const App = () => {
       <Cursor id={id} sharedMap={sharedCursorMap}>
         <Images id={id} sharedMap={sharedDragMap} sharedSec={sharedCursorMap}/>
       </Cursor>
+      <button
+        onClick={() => {
+
+          window.print()
+        }}
+        type="button"
+        value="Print">Print</button>
     </>
   )
 }
